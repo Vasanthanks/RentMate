@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RentMate – rent what you need, lend what you don't. A peer-to-peer rental marketplace.">
+  <title>RentMate – Peer-to-Peer Rental Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a href="#home" class="logo" aria-label="RentMate home">
+        <span class="logo-mark">R</span>
+        <span class="logo-text">Rent<span>Mate</span></span>
+      </a>
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="navLinks" class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#browse">Browse Items</a></li>
+        <li><a href="#list-item">List an Item</a></li>
+        <li><a href="#dashboard">Owner Dashboard <span id="navPendingBadge" class="badge-count hidden">0</span></a></li>
+        <li><a href="#history">Rental History</a></li>
+        <li><a href="#list-item" class="btn btn-primary btn-sm">+ Start Lending</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Peer-to-peer rental marketplace</span>
+          <h1>Rent what you need.<br><span class="accent">Lend what you don't.</span></h1>
+          <p class="hero-sub">Why buy a camera, drill or bicycle you'll use twice a year? RentMate connects people who own useful things with people who need them, just for the days they need them.</p>
+          <div class="hero-actions">
+            <a href="#browse" class="btn btn-primary btn-lg">Search Items</a>
+            <a href="#list-item" class="btn btn-outline btn-lg">List Your Item</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong id="statItems">0</strong>
+              <span>Items listed</span>
+            </div>
+            <div class="stat">
+              <strong id="statRequests">0</strong>
+              <span>Rental requests</span>
+            </div>
+            <div class="stat">
+              <strong id="statPending">0</strong>
+              <span>Awaiting approval</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-card hc-1"><span class="hc-emoji">📷</span><div><strong>Mirrorless Camera</strong><small>₹800 / day</small></div></div>
+          <div class="hero-card hc-2"><span class="hc-emoji">🚲</span><div><strong>Mountain Bike</strong><small>₹350 / day</small></div></div>
+          <div class="hero-card hc-3"><span class="hc-emoji">🔧</span><div><strong>Power Drill Kit</strong><small>₹250 / day</small></div></div>
+          <div class="hero-circle"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="how container" aria-label="How it works">
+      <div class="how-step"><span class="how-icon">🔍</span><h3>Find</h3><p>Search and filter items near you.</p></div>
+      <div class="how-step"><span class="how-icon">📅</span><h3>Request</h3><p>Pick your dates and see the price instantly.</p></div>
+      <div class="how-step"><span class="how-icon">✅</span><h3>Get approved</h3><p>The owner approves or rejects your request.</p></div>
+      <div class="how-step"><span class="how-icon">🔄</span><h3>Return</h3><p>Owner marks it returned and it's logged in history.</p></div>
+    </section>
+
+    <!-- ===== BROWSE ===== -->
+    <section id="browse" class="section container">
+      <div class="section-head">
+        <h2>Available items</h2>
+        <p>Browse everything listed on RentMate.</p>
+      </div>
+
+      <div class="filter-bar">
+        <div class="field grow">
+          <label for="searchInput">Search</label>
+          <input type="search" id="searchInput" placeholder="Search by product name…" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="categoryFilter">Category</label>
+          <select id="categoryFilter"></select>
+        </div>
+        <div class="field">
+          <label for="locationFilter">Location</label>
+          <select id="locationFilter"></select>
+        </div>
+        <div class="field">
+          <label for="sortSelect">Sort by</label>
+          <select id="sortSelect">
+            <option value="newest">Newest first</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+          </select>
+        </div>
+        <button id="clearFilters" class="btn btn-ghost" type="button">Clear</button>
+      </div>
+
+      <p id="resultCount" class="result-count" aria-live="polite"></p>
+      <div id="itemsGrid" class="items-grid"></div>
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon">🔎</div>
+        <h3>No products found</h3>
+        <p>Try a different search word, or clear the filters to see everything.</p>
+      </div>
+    </section>
+
+    <!-- ===== LIST AN ITEM ===== -->
+    <section id="list-item" class="section section-tint">
+      <div class="container list-grid">
+        <div class="list-intro">
+          <h2>Turn idle items into income</h2>
+          <p>List something you rarely use. Set your daily price and it appears in the marketplace right away.</p>
+          <ul class="tick-list">
+            <li>Free to list</li>
+            <li>You approve every request</li>
+            <li>Track returns in one place</li>
+          </ul>
+        </div>
+        <form id="listForm" class="card form-card" novalidate>
+          <h3>List a new item</h3>
+          <div class="form-grid">
+            <div class="field span-2">
+              <label for="itemName">Item name</label>
+              <input type="text" id="itemName" placeholder="e.g. Canon EOS 200D" maxlength="60">
+              <small class="error" data-error-for="itemName"></small>
+            </div>
+            <div class="field">
+              <label for="itemCategory">Category</label>
+              <select id="itemCategory"></select>
+              <small class="error" data-error-for="itemCategory"></small>
+            </div>
+            <div class="field">
+              <label for="itemPrice">Daily rental price (₹)</label>
+              <input type="number" id="itemPrice" placeholder="e.g. 500" min="1" step="1">
+              <small class="error" data-error-for="itemPrice"></small>
+            </div>
+            <div class="field">
+              <label for="itemLocation">Location</label>
+              <input type="text" id="itemLocation" placeholder="e.g. Chennai" maxlength="40">
+              <small class="error" data-error-for="itemLocation"></small>
+            </div>
+            <div class="field">
+              <label for="itemImage">Product image URL <span class="muted">(optional)</span></label>
+              <input type="url" id="itemImage" placeholder="https://…">
+              <small class="error" data-error-for="itemImage"></small>
+            </div>
+            <div class="field span-2">
+              <label for="itemDescription">Description</label>
+              <textarea id="itemDescription" rows="4" placeholder="Condition, what's included, any rules…" maxlength="400"></textarea>
+              <small class="error" data-error-for="itemDescription"></small>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Publish listing</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== OWNER DASHBOARD ===== -->
+    <section id="dashboard" class="section container">
+      <div class="section-head">
+        <h2>Owner dashboard</h2>
+        <p>Incoming rental requests for your items. Approve, reject, and mark rentals returned.</p>
+      </div>
+      <div id="requestTabs" class="tabs" role="tablist">
+        <button class="tab active" data-filter="All" role="tab">All <span class="tab-count" data-count-for="All">0</span></button>
+        <button class="tab" data-filter="Pending" role="tab">Pending <span class="tab-count" data-count-for="Pending">0</span></button>
+        <button class="tab" data-filter="Approved" role="tab">Approved <span class="tab-count" data-count-for="Approved">0</span></button>
+        <button class="tab" data-filter="Rejected" role="tab">Rejected <span class="tab-count" data-count-for="Rejected">0</span></button>
+        <button class="tab" data-filter="Returned" role="tab">Returned <span class="tab-count" data-count-for="Returned">0</span></button>
+      </div>
+      <div id="requestsList" class="requests-list"></div>
+      <div id="requestsEmpty" class="empty-state hidden">
+        <div class="empty-icon">📭</div>
+        <h3>No requests here yet</h3>
+        <p>When someone requests one of your items it will show up in this list.</p>
+      </div>
+    </section>
+
+    <!-- ===== RENTAL HISTORY ===== -->
+    <section id="history" class="section section-tint">
+      <div class="container">
+        <div class="section-head">
+          <h2>Rental history</h2>
+          <p>Every rental request, with renter, dates, total price and current status.</p>
+        </div>
+        <div id="historySummary" class="summary-row"></div>
+        <div class="card table-card">
+          <div class="table-wrap">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Item</th><th>Renter</th><th>Dates</th><th>Days</th><th>Total</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+          </div>
+          <div id="historyEmpty" class="empty-state hidden">
+            <div class="empty-icon">🗂️</div>
+            <h3>No rental history yet</h3>
+            <p>Requested and completed rentals will be listed here.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <a href="#home" class="logo logo-light"><span class="logo-mark">R</span><span class="logo-text">Rent<span>Mate</span></span></a>
+        <p class="footer-note">College project prototype. Data is stored only in this browser's Local Storage. A real platform needs a Java backend and a database.</p>
+      </div>
+      <button id="resetDemo" class="btn btn-light btn-sm" type="button">Reset demo data</button>
+    </div>
+  </footer>
+
+  <!-- ===== ITEM / REQUEST MODAL ===== -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitleLabel">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-dialog">
+      <button id="modalClose" class="modal-close" type="button" aria-label="Close" data-close-modal>&times;</button>
+      <span id="modalTitleLabel" class="sr-only">Item details and rental request</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
